@@ -12,7 +12,7 @@ def vcf_to_csv(vcf_filename, csv_filename):
             writer.writerow(['first_name', 'phone_numbers', 'email', 'url', 'ab_label', 'social_profiles'])
             for vcf_contact in vcf_contacts:
                 first_name = vcf_contact.fn.value if hasattr(vcf_contact, 'fn') else ''
-                phone_numbers = vcf_contact.tel.value if hasattr(vcf_contact, 'tel') else ''
+                phone_numbers = ",".join([tel.value for tel in vcf_contact.contents.get('tel', [])]) if hasattr(vcf_contact,'tel') else ''
                 email = vcf_contact.email.value if hasattr(vcf_contact, 'email') else ''
                 url = vcf_contact.url.value if hasattr(vcf_contact, 'url') else ''
                 ab_label = getattr(vcf_contact, 'x-ablabel').value if hasattr(vcf_contact, 'x-ablabel') else ''
